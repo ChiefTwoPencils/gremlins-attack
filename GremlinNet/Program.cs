@@ -23,6 +23,7 @@ using static Gremlin.Net.Process.Traversal.Direction;
 using static Gremlin.Net.Process.Traversal.T;
 
 using GremlinDsl;
+using static GremlinUtils.Server;
 
 namespace GremlinNet
 {
@@ -30,8 +31,8 @@ namespace GremlinNet
     {
         static void Main(string[] args)
         {
-            var g = Traversal().WithRemote(LocalRemoteConn);
-            g = g.WithStrategies(new SubgraphStrategy(
+            // Assumes the modern graph is loaded...
+            var g = SubG(new SubgraphStrategy(
                 HasLabel("name"), 
                 Has("weight", Gt(0.5))));
             
@@ -55,15 +56,7 @@ namespace GremlinNet
             var createdAtLeastTwo = g.Persons().CreatedAtLeast(2).Count();
             Console.WriteLine(createdAtLeastTwo.Next());
             
-            LocalRemoteConn.Dispose();
+            DisposeConnection();
         }
-
-        private static DriverRemoteConnection LocalRemoteConn { get; } 
-            = new DriverRemoteConnection(LocalClient);
-
-        private static GremlinClient LocalClient => new GremlinClient(
-            new GremlinServer("localhost", 8182),
-            new GraphSON3Reader(),
-            new GraphSON3Writer());
     }
 }

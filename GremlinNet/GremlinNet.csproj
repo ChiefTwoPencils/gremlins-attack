@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\GremlinDsl\GremlinDsl.csproj" />
+      <ProjectReference Include="..\GremlinUtils\GremlinUtils.csproj" />
     </ItemGroup>
 
 </Project>
