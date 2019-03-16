@@ -7,6 +7,7 @@ using Gremlin.Net.Driver;
 using Gremlin.Net.Driver.Remote;
 using Gremlin.Net.Process.Traversal;
 using Gremlin.Net.Process.Traversal.Strategy.Decoration;
+using Gremlin.Net.Structure;
 using Gremlin.Net.Structure.IO.GraphSON;
 using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 using static Gremlin.Net.Process.Traversal.__;
@@ -31,19 +32,25 @@ namespace GremlinNet
         {
             var g = Traversal().WithRemote(LocalRemoteConn);
             g = g.WithStrategies(new SubgraphStrategy(
-                HasLabel("person"), 
+                HasLabel("name"), 
                 Has("weight", Gt(0.5))));
-            g.V()
+            
+            var names = g.V()
                 .Values<string>("name")
                 .ToList()
-                .ToList()
-                .ForEach(Console.WriteLine);
+                .ToList();
+            names.ForEach(Console.WriteLine);
+            
+            foreach (var vertex in g.V().Values<object>().ToList())
+            {
+                Console.WriteLine(vertex);
+            }
 
             var markoKnowsJosh = g.Persons("marko").Knows("josh");
             Console.WriteLine(markoKnowsJosh.Next());
             
             var markosYoungestFriend = g.Persons("marko").YoungestFriendsAge();
-            Console.WriteLine(markosYoungestFriend.Next());
+           Console.WriteLine(markosYoungestFriend.Next());
             
             var createdAtLeastTwo = g.Persons().CreatedAtLeast(2).Count();
             Console.WriteLine(createdAtLeastTwo.Next());

@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GremlinNet", "GremlinNet\Gr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GremlinDsl", "GremlinDsl\GremlinDsl.csproj", "{31AA35FF-1C03-4856-B32F-9E198222B9A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDevs", "AppDevs\AppDevs.csproj", "{3C60393F-6597-4AD0-AF2E-B7EA2EC74E31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDevsDsl", "AppDevsDsl\AppDevsDsl.csproj", "{4638C2A8-F047-40C8-B009-F2AA38D8B268}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{31AA35FF-1C03-4856-B32F-9E198222B9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31AA35FF-1C03-4856-B32F-9E198222B9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31AA35FF-1C03-4856-B32F-9E198222B9A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C60393F-6597-4AD0-AF2E-B7EA2EC74E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C60393F-6597-4AD0-AF2E-B7EA2EC74E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C60393F-6597-4AD0-AF2E-B7EA2EC74E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C60393F-6597-4AD0-AF2E-B7EA2EC74E31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4638C2A8-F047-40C8-B009-F2AA38D8B268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4638C2A8-F047-40C8-B009-F2AA38D8B268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4638C2A8-F047-40C8-B009-F2AA38D8B268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4638C2A8-F047-40C8-B009-F2AA38D8B268}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
