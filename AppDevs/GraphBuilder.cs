@@ -19,6 +19,7 @@ namespace AppDevs
     /// </summary>
     public static class GraphBuilder
     {
+        
         public static GraphTraversalSource BuildEmpty() => G();
 
         public static EdgeTraversal GetOrBuildAppDev()
@@ -107,7 +108,7 @@ namespace AppDevs
                 .AddE("workedOn").From("dss").To("al")
                 .AddE("workedOn").From("djs").To("as")
                 .AddE("workedOn").From("djs").To("al");
-            return vees.Aggregate("x");
+            return vees;
         }
     }
 }

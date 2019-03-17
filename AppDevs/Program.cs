@@ -26,7 +26,13 @@ namespace AppDevs
         static GraphTraversal<Vertex, Vertex> Devs()
             => VertsByLabel("dev");
 
-        static GraphTraversal<Vertex, string> Names(GraphTraversal<Vertex, Vertex> traversal)
+        private static Func<GraphTraversal<Vertex, string>> DevNames = () => NamesFor(Devs());
+
+        private static Func<GraphTraversal<Vertex, string>> AppNames = () => NamesFor(Apps());
+
+        private static Func<GraphTraversal<Vertex, string>> SkillNames = () => NamesFor(Skills());
+
+        static GraphTraversal<Vertex, string> NamesFor(GraphTraversal<Vertex, Vertex> traversal)
             => traversal.Values<string>("name");
 
         static GraphTraversal<Vertex, Vertex> Apps()
@@ -35,50 +41,34 @@ namespace AppDevs
         static GraphTraversal<Vertex, Vertex> Skills()
             => VertsByLabel("skill");
 
+        static GraphTraversal<Vertex, Vertex> DevsAssignedTo(string appName)
+        {
+            return Apps()
+                .Has("name", appName)
+                .InE()
+                .HasLabel("assignedTo")
+                .OutV();
+        }
+
         static GraphTraversal<Vertex, Vertex> VertsByLabel(string label)
             => GetTraversal().HasLabel(label);
 
-        static void PrintDevs()
-        {
-            var devs = Devs()
-                .Values<string>("name");
-            PrintAll(devs);
-        }
+        static void PrintDevs() => PrintAll(DevNames());
         
-        static void PrintTrackerDevs()
-        {
-            var trDevs = Apps()
-                .Has("name", "tracker")
-                .InE()
-                .HasLabel("assignedTo")
-                .OutV()
-                .Values<string>("name");
-            PrintAll(trDevs);
-        }
+        static void PrintTrackerDevs() => PrintAll(NamesFor(DevsAssignedTo("tracker")));
         
         static void PrintAllSafDevs()
         {
             var safDevs = Apps()
                 .Has("name", "saf")
                 .InE()
-                .OutV()
-                .Values<string>("name");
-            PrintAll(safDevs);
+                .OutV();
+            PrintAll(NamesFor(safDevs));
         }
 
-        static void PrintApps()
-        {
-            var apps = Apps()
-                .Values<string>("name");
-            PrintAll(apps);
-        }
+        static void PrintApps() => PrintAll(AppNames());
 
-        static void PrintSkills()
-        {
-            var skills = Skills()
-                .Values<string>("name");
-            PrintAll(skills);
-        }
+        static void PrintSkills() => PrintAll(SkillNames());
 
         static void PrintAll(GraphTraversal<Vertex, string> traversal)
         {
