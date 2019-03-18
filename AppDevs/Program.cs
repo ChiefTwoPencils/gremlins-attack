@@ -26,6 +26,12 @@ namespace AppDevs
 
         static GraphTraversal<Vertex, Vertex> Devs()
             => VertsByLabel("dev");
+        
+        static GraphTraversal<Vertex, Vertex> Apps()
+            => VertsByLabel("app");
+
+        static GraphTraversal<Vertex, Vertex> Skills()
+            => VertsByLabel("skill");
 
         private static Func<GraphTraversal<Vertex, string>> DevNames = () => NamesFor(Devs());
 
@@ -35,20 +41,6 @@ namespace AppDevs
 
         static GraphTraversal<Vertex, string> NamesFor(GraphTraversal<Vertex, Vertex> traversal)
             => traversal.Values<string>("name");
-
-        static GraphTraversal<Vertex, Vertex> SkillsFor(string appName)
-        {
-            return Apps()
-                .Has("name", appName)
-                .OutE("requires")
-                .InV();
-        }
-
-        static GraphTraversal<Vertex, Vertex> Apps()
-            => VertsByLabel("app");
-
-        static GraphTraversal<Vertex, Vertex> Skills()
-            => VertsByLabel("skill");
 
         static GraphTraversal<Vertex, Vertex> VertsByLabel(string label)
             => GetTraversal().HasLabel(label);
