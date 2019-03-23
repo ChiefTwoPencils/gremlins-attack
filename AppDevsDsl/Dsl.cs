@@ -6,48 +6,49 @@ using static Gremlin.Net.Process.Traversal.P;
 
 namespace AppDevsDsl
 {
-    internal static class Names
+    internal static class EdgeNames
     {
-        internal static class Edges
-        {
-            internal const string AssignedTo = "assignedTo";
-            internal const string WorkedOn = "workedOn";
-        }
-        
-        internal static class Vertices
-        {
-            internal const string App = "app";
-        }
-        
-        internal static class Properties
-        {
-            internal const string Name = "name";
-        }
+        internal const string AssignedTo = "assignedTo";
+        internal const string WorkedOn = "workedOn";
     }
+    
+    internal static class VertexNames
+    {
+        internal const string App = "app";
+    }
+    
+    internal static class Properties
+    {
+        internal const string Name = "name";
+    }
+    
     public static class AppDevExtensions
     {
         public static GraphTraversal<Vertex, Vertex> AssignedTo(this GraphTraversal<Vertex, Vertex> traversal,
-            string appName) => traversal.Out(Names.Edges.AssignedTo)
-                .HasLabel(Names.Vertices.App)
-                .Has(Names.Properties.Name, appName);
+            string appName) => traversal.Out(EdgeNames.AssignedTo)
+                .HasLabel(VertexNames.App)
+                .Has(Properties.Name, appName);
 
         public static GraphTraversal<Vertex, Vertex> WorkedOn(this GraphTraversal<Vertex, Vertex> traversal,
-            string appName) => traversal.Out(Names.Edges.WorkedOn)
-                .HasLabel(Names.Vertices.App)
-                .Has(Names.Properties.Name, appName);
+            string appName) => traversal.Out(EdgeNames.WorkedOn)
+                .HasLabel(VertexNames.App)
+                .Has(Properties.Name, appName);
+
+        public static GraphTraversal<Vertex, string> Names(this GraphTraversal<Vertex, Vertex> traversal)
+            => traversal.Values<string>("name");
     }
     
     public static class __AppDev
     {
         public static GraphTraversal<object, Vertex> AssignedTo(string appName)
-            => Out(Names.Edges.AssignedTo)
-                .HasLabel(Names.Vertices.App)
-                .Has(Names.Properties.Name, appName);
+            => Out(EdgeNames.AssignedTo)
+                .HasLabel(VertexNames.App)
+                .Has(Properties.Name, appName);
 
         public static GraphTraversal<object, Vertex> WorkedOn(string appName)
-            => Out(Names.Edges.WorkedOn)
-                .HasLabel(Names.Vertices.App)
-                .Has(Names.Properties.Name, appName);
+            => Out(EdgeNames.WorkedOn)
+                .HasLabel(VertexNames.App)
+                .Has(Properties.Name, appName);
     }
     
     public static class AppDevTraversalSourceExtensions
