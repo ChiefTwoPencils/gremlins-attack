@@ -10,6 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AppDevsDsl\AppDevsDsl.csproj" />
       <ProjectReference Include="..\GremlinUtils\GremlinUtils.csproj" />
     </ItemGroup>
 

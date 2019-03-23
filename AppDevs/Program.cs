@@ -6,6 +6,8 @@ using Gremlin.Net.Process.Traversal;
 using Gremlin.Net.Structure;
 using GremlinUtils;
 
+using AppDevsDsl;
+
 namespace AppDevs
 {
     class Program
@@ -21,17 +23,20 @@ namespace AppDevs
             Server.DisposeConnection();
         }
 
-        static GraphTraversal<Vertex, Vertex> GetTraversal() 
-            => GraphBuilder.GetOrBuildAppDev().V();
+        static GraphTraversalSource GetTraversalSource() 
+            => GraphBuilder.GetOrBuildAppDev();
 
         static GraphTraversal<Vertex, Vertex> Devs()
-            => VertsByLabel("dev");
+            => GetTraversalSource().Developers();
         
+        static GraphTraversal<Vertex, Vertex> DevsAssignedTo(string appName)
+         => Devs().AssignedTo(appName);
+
         static GraphTraversal<Vertex, Vertex> Apps()
-            => VertsByLabel("app");
+            => GetTraversalSource().Apps();
 
         static GraphTraversal<Vertex, Vertex> Skills()
-            => VertsByLabel("skill");
+            => GetTraversalSource().Skills();
 
         private static Func<GraphTraversal<Vertex, string>> DevNames = () => NamesFor(Devs());
 
@@ -42,9 +47,6 @@ namespace AppDevs
         static GraphTraversal<Vertex, string> NamesFor(GraphTraversal<Vertex, Vertex> traversal)
             => traversal.Values<string>("name");
 
-        static GraphTraversal<Vertex, Vertex> VertsByLabel(string label)
-            => GetTraversal().HasLabel(label);
-
         static void PrintDevs() => PrintAll(DevNames());
         
         static void PrintTrackerDevs() => PrintAll(NamesFor(DevsAssignedTo("tracker")));
@@ -52,14 +54,6 @@ namespace AppDevs
         static void PrintApps() => PrintAll(AppNames());
 
         static void PrintSkills() => PrintAll(SkillNames());
-
-        static GraphTraversal<Vertex, Vertex> DevsAssignedTo(string appName)
-        {
-            return Apps()
-                .Has("name", appName)
-                .InE("assignedTo")
-                .OutV();
-        }
         
         static void PrintAllSafDevs()
         {

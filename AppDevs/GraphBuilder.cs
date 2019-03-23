@@ -22,16 +22,16 @@ namespace AppDevs
         
         public static GraphTraversalSource BuildEmpty() => G();
 
-        public static EdgeTraversal GetOrBuildAppDev()
+        public static GraphTraversalSource GetOrBuildAppDev()
         {
             var g = BuildEmpty();
-            g.V().Drop().Iterate();
-            return BuildAppDev(g);
+            var count = g.V().Count().Next();
+            return count == 0 ? BuildAppDev(g) : g;
         }
 
-        private static EdgeTraversal BuildAppDev(GraphTraversalSource source)
+        private static GraphTraversalSource BuildAppDev(GraphTraversalSource source)
         {
-            var vees = source
+            source
                 .AddV("dev").Property("name", "srivani").As("dsm")
                 .AddV("dev").Property("name", "sumit").As("dss")
                 .AddV("dev").Property("name", "jansson").As("djs")
@@ -107,8 +107,9 @@ namespace AppDevs
                 .AddE("workedOn").From("dss").To("as")
                 .AddE("workedOn").From("dss").To("al")
                 .AddE("workedOn").From("djs").To("as")
-                .AddE("workedOn").From("djs").To("al");
-            return vees;
+                .AddE("workedOn").From("djs").To("al")
+                .Iterate();
+            return source;
         }
     }
 }
